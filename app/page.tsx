@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { MapPin } from "lucide-react"
 import { TabSection } from "../components/TabSection"
 import { Textarea } from "@/components/ui/textarea"
+import { config } from "@/lib/config"
 
 const scrollToSection = (elementId: string) => {
   const element = document.getElementById(elementId)
@@ -47,7 +48,7 @@ export default function LandingPage() {
     const formData = new FormData(e.currentTarget)
     
     try {
-      await fetch("https://formspree.io/f/REMOVED_FORMSPREE_ID", {
+      await fetch(`https://formspree.io/f/${config.formspree.chatEndpoint}`, {
         method: "POST",
         body: formData,
         headers: {
@@ -257,9 +258,12 @@ export default function LandingPage() {
                 </p>
               </div>
               <div className="w-full max-w-sm space-y-2">
-                <Link href="mailto:fastretrieve.ai@gmail.com?subject=Inquiry about FastRetrieve.AI&body=I&apos;m interested in learning more about FastRetrieve.AI&apos;s solutions.">
-                  <Button className="w-full bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/20">Contact Us</Button>
-                </Link>
+                <Button 
+                  className="w-full bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/20"
+                  onClick={() => setIsChatOpen(true)}
+                >
+                  Contact Us
+                </Button>
               </div>
             </div>
           </div>
@@ -285,7 +289,7 @@ export default function LandingPage() {
               <div className="flex flex-col space-y-4">
                 <h3 className="text-xl font-bold text-primary">Get the latest in your inbox</h3>
                 <form
-                  action="https://formspree.io/f/xgegpnnw"
+                  action={`https://formspree.io/f/${config.formspree.newsletterEndpoint}`}
                   method="POST"
                   className="flex flex-col sm:flex-row gap-2"
                 >
