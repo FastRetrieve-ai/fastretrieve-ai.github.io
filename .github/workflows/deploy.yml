@@ -30,8 +30,10 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Clean install dependencies
+        run: |
+          npm clean-install
+          npm install sonner
 
       - name: Build with Next.js
         run: npm run build
@@ -39,6 +41,8 @@ jobs:
           NEXT_LINT_ERROR_EXIT: false
           NEXT_PUBLIC_FORMSPREE_CHAT_FORM_ID: ${{ secrets.FORMSPREE_CHAT_FORM_ID }}
           NEXT_PUBLIC_FORMSPREE_NEWSLETTER_FORM_ID: ${{ secrets.FORMSPREE_NEWSLETTER_FORM_ID }}
+          # Enable Next.js build cache
+          NEXT_TELEMETRY_DISABLED: 1
 
       - name: Add .nojekyll file
         run: touch ./out/.nojekyll
