@@ -30,6 +30,7 @@ import { TabSection } from "../components/TabSection";
 import { Textarea } from "@/components/ui/textarea";
 import { config } from "@/lib/config";
 import { toast } from "sonner";
+import { WavyBackground } from "../components/WavyBackground";
 
 const scrollToSection = (elementId: string) => {
   const element = document.getElementById(elementId);
@@ -269,9 +270,18 @@ export default function LandingPage() {
         )}
       </header>
       <main className="flex-1 pt-16">
-        <section className="w-full py-8 sm:py-12 md:py-16 lg:py-20 bg-gradient-to-b from-primary/5 to-transparent">
-          <div className="container px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col items-center text-center">
+        <section className="w-full">
+          <WavyBackground
+            className="container px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center"
+            containerClassName="h-[400px]"
+            colors={["#38bdf8", "#818cf8", "#c084fc"]}
+            waveWidth={12}
+            backgroundFill="transparent"
+            blur={2}
+            speed="slow"
+            waveOpacity={0.25}
+          >
+            <div className="flex flex-col items-center justify-center h-full text-center">
               <div className="space-y-3 sm:space-y-4">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none bg-gradient-to-r from-primary to-primary/80 text-transparent bg-clip-text">
                   FastRetrieve.AI
@@ -281,7 +291,7 @@ export default function LandingPage() {
                 </p>
               </div>
             </div>
-          </div>
+          </WavyBackground>
         </section>
         <section
           id="services"
