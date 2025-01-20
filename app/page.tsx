@@ -74,15 +74,14 @@ export default function LandingPage() {
           description: data.error || "Please try again later.",
         })
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to send message", {
         description: "Please check your connection and try again.",
       })
-      console.error("Error submitting form:", error)
     }
   }
 
-  const handleNewsletterSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onNewsletterSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (isNewsletterLoading) return
     
@@ -101,7 +100,7 @@ export default function LandingPage() {
       if (response.ok) {
         try {
           await response.json()
-        } catch (error) {
+        } catch {
           // Ignore JSON parsing errors if the response was successful
         }
         
@@ -116,7 +115,7 @@ export default function LandingPage() {
           description: data.error || "Please try again later.",
         })
       }
-    } catch (error) {
+    } catch {
       // Only show network error if the request failed to reach the server
       toast.error("Failed to subscribe", {
         description: "Please check your connection and try again.",
@@ -359,14 +358,14 @@ export default function LandingPage() {
                     disabled={isNewsletterLoading}
                     ref={(input) => {
                       if (input) {
-                        // @ts-ignore - we know this exists
+                        // @ts-expect-error - Component has implicit any type
                         window.newsletterInput = input;
                       }
                     }}
                   />
                   <Button 
                     onClick={async () => {
-                      // @ts-ignore - we know this exists
+                      // @ts-expect-error - Component has implicit any type
                       const email = window.newsletterInput?.value;
                       if (!email) {
                         toast.error("Please enter your email");
@@ -394,7 +393,7 @@ export default function LandingPage() {
                             description: "You'll receive updates from FastRetrieve.AI in your inbox.",
                           });
                           // Reset the input
-                          // @ts-ignore - we know this exists
+                          // @ts-expect-error - Component has implicit any type
                           window.newsletterInput.value = '';
                         } else {
                           const data = await response.json().catch(() => ({}));
