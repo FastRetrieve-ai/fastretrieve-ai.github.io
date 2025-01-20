@@ -143,11 +143,8 @@ export default function LandingPage() {
   const [isTabMenuOpen, setIsTabMenuOpen] = useState(false);
 
   useEffect(() => {
-    // Check system preference on mount
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setIsDarkMode(true);
-      document.documentElement.classList.add("dark");
-    }
+    // Initialize to light mode
+    document.documentElement.classList.remove("dark");
   }, []);
 
   const toggleDarkMode = () => {
@@ -275,10 +272,10 @@ export default function LandingPage() {
             className="container px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center"
             containerClassName="h-[400px]"
             colors={["#38bdf8", "#818cf8", "#c084fc"]}
-            waveWidth={12}
+            waveWidth={32}
             backgroundFill="transparent"
-            blur={2}
-            speed="slow"
+            blur={5}
+            speed="fast"
             waveOpacity={0.25}
           >
             <div className="flex flex-col items-center justify-center h-full text-center">
