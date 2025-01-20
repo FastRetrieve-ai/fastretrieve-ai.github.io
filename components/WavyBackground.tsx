@@ -60,7 +60,7 @@ export const WavyBackground = ({
 
       const waveColors = colors ?? ["#38bdf8", "#818cf8", "#c084fc"];
 
-      timeRef.current += speed === "fast" ? 0.002 : 0.001;
+      timeRef.current += speed === "fast" ? 0.008 : 0.001;
       ctx.globalAlpha = waveOpacity;
 
       // Draw waves from back to front
@@ -71,7 +71,7 @@ export const WavyBackground = ({
         ctx.lineWidth = waveWidth || 15;
 
         for (let x = 0; x < width; x += 5) {
-          const y = noise.current(x * 0.002, i * 0.5, timeRef.current) * 40; // Reduced amplitude
+          const y = noise.current(x * 0.002, i * 3.0, timeRef.current) * 40; // Reduced amplitude
           ctx.lineTo(x, height * 0.4 + y);
         }
 
