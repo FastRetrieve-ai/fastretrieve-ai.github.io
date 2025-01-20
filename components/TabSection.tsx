@@ -41,7 +41,7 @@ export function TabSection() {
                     className={`px-3 h-9 relative ${
                       activeTab === tab.title
                         ? "text-primary font-medium after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary after:rounded-full"
-                        : "text-muted-foreground hover:text-foreground"
+                        : "text-muted-foreground"
                     }`}
                   >
                     {tab.title}
