@@ -21,6 +21,7 @@ import {
   X,
   Moon,
   Sun,
+  Menu,
 } from "lucide-react";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
@@ -138,6 +139,7 @@ export default function LandingPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isNewsletterLoading, setIsNewsletterLoading] = useState(false);
+  const [isTabMenuOpen, setIsTabMenuOpen] = useState(false);
 
   useEffect(() => {
     // Check system preference on mount
@@ -196,7 +198,7 @@ export default function LandingPage() {
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-sm dark:bg-gray-950/80 border-b border-primary/10">
         <div className="container flex h-16 items-center px-4 sm:px-6 lg:px-8">
           <Link
-            className="flex items-center justify-center mr-4 sm:mr-6"
+            className="flex items-center justify-center mr-4 sm:mr-6 shrink-0"
             href="#"
           >
             <Zap className="h-6 w-6 text-primary" />
@@ -204,42 +206,67 @@ export default function LandingPage() {
           </Link>
           <div className="flex-1 flex items-center justify-center max-w-screen-lg mx-auto">
             <div className="w-full max-w-[min(700px,calc(100vw-32px))] px-4">
-              <TabSection />
+              <div className="md:hidden">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setIsTabMenuOpen(!isTabMenuOpen)}
+                  className="relative z-50"
+                >
+                  <Menu className="h-5 w-5 text-primary" />
+                </Button>
+              </div>
+              <div className="hidden md:block">
+                <TabSection />
+              </div>
             </div>
           </div>
-          <nav className="hidden sm:flex items-center gap-1 sm:gap-2 md:gap-4">
-            <button
-              onClick={() => scrollToSection("features")}
-              className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-primary transition-colors duration-300 hover:scale-105"
-            >
-              Features
-            </button>
-            <button
-              onClick={() => scrollToSection("services")}
-              className="px-3 py-2 text-sm font-medium hover:text-primary transition-colors"
-            >
-              Services
-            </button>
-            <button
-              onClick={() => scrollToSection("contact")}
-              className="px-3 py-2 text-sm font-medium hover:text-primary transition-colors"
-            >
-              Contact
-            </button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleDarkMode}
-              className="ml-2"
-            >
-              {isDarkMode ? (
-                <Sun className="h-5 w-5 text-primary" />
-              ) : (
-                <Moon className="h-5 w-5 text-primary" />
-              )}
-            </Button>
-          </nav>
+          <div className="flex items-center gap-1 sm:gap-2 md:gap-4 overflow-x-auto scrollbar-hide">
+            <nav className="flex items-center gap-1 sm:gap-2 md:gap-4 whitespace-nowrap">
+              <button
+                onClick={() => scrollToSection("features")}
+                className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-primary transition-colors duration-300 hover:scale-105 shrink-0"
+              >
+                Features
+              </button>
+              <button
+                onClick={() => scrollToSection("services")}
+                className="px-3 py-2 text-sm font-medium hover:text-primary transition-colors shrink-0"
+              >
+                Services
+              </button>
+              <button
+                onClick={() => scrollToSection("contact")}
+                className="px-3 py-2 text-sm font-medium hover:text-primary transition-colors shrink-0"
+              >
+                Contact
+              </button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={toggleDarkMode}
+                className="shrink-0"
+              >
+                {isDarkMode ? (
+                  <Sun className="h-5 w-5 text-primary" />
+                ) : (
+                  <Moon className="h-5 w-5 text-primary" />
+                )}
+              </Button>
+            </nav>
+          </div>
         </div>
+
+        {/* Mobile Tab Menu */}
+        {isTabMenuOpen && (
+          <div className="md:hidden fixed inset-0 z-40 bg-white dark:bg-gray-950">
+            <div className="pt-20 px-4 py-2 space-y-4">
+              <div className="flex flex-col space-y-2">
+                <TabSection />
+              </div>
+            </div>
+          </div>
+        )}
       </header>
       <main className="flex-1 pt-16">
         <section className="w-full py-8 sm:py-12 md:py-16 lg:py-20 bg-gradient-to-b from-primary/5 to-transparent">
@@ -463,7 +490,7 @@ export default function LandingPage() {
           </div>
         </section>
       </main>
-      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t border-primary/10">
+      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t border-primary/10 relative z-40 bg-white/80 dark:bg-gray-950/80 backdrop-blur-sm">
         <p className="text-xs text-primary/60">
           © 2025 FastRetrieve.AI. All rights reserved.
         </p>
@@ -484,9 +511,9 @@ export default function LandingPage() {
       </footer>
 
       {/* Floating Chat Button and Card */}
-      <div className="fixed bottom-6 right-6 z-50">
+      <div className="fixed bottom-20 sm:bottom-6 right-6 z-50">
         {isChatOpen ? (
-          <Card className="w-[300px] sm:w-[380px] shadow-lg border-primary/10 bg-gray-950 text-white">
+          <Card className="w-[300px] sm:w-[380px] shadow-lg border-primary/10 bg-gray-950 text-white mb-4">
             <CardHeader className="flex flex-row items-center space-x-4 pb-6">
               <div className="bg-primary/10 p-2 rounded-full">
                 <Zap className="h-8 w-8 text-primary" aria-hidden="true" />
