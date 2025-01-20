@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { CheckCircle, Cpu, Database, FileText, Image, Lock, Shield, Zap, MessageCircle, X, Moon, Sun } from "lucide-react"
+import { CheckCircle, Cpu, FileText, Image as ImageIcon, Lock, Shield, Zap, MessageCircle, X, Moon, Sun } from "lucide-react"
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { MapPin } from "lucide-react"
@@ -154,7 +154,7 @@ export default function LandingPage() {
               </Card>
               <Card className="group border-[0.5px] hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-300 ease-out">
                 <CardHeader>
-                  <Image className="w-8 h-8 mb-2 text-primary/80 group-hover:text-primary group-hover:scale-110 transition-all duration-300" />
+                  <ImageIcon className="w-8 h-8 mb-2 text-primary/80 group-hover:text-primary group-hover:scale-110 transition-all duration-300" />
                   <CardTitle className="text-primary/90 group-hover:text-primary transition-colors duration-300">Multimodal Ingestion</CardTitle>
                 </CardHeader>
                 <CardContent className="text-gray-600 dark:text-gray-300">
@@ -177,7 +177,7 @@ export default function LandingPage() {
                   <CardTitle className="text-primary/90 group-hover:text-primary transition-colors duration-300">Stay in Control</CardTitle>
                 </CardHeader>
                 <CardContent className="text-gray-600 dark:text-gray-300">
-                  All AI features are 100% opt-in. You're in charge of when, where, and how you use them, ensuring
+                  All AI features are 100% opt-in. You&apos;re in charge of when, where, and how you use them, ensuring
                   complete control over your data and processes.
                 </CardContent>
               </Card>
@@ -257,7 +257,7 @@ export default function LandingPage() {
                 </p>
               </div>
               <div className="w-full max-w-sm space-y-2">
-                <Link href="mailto:fastretrieve.ai@gmail.com?subject=Inquiry about FastRetrieve.AI&body=I'm interested in learning more about FastRetrieve.AI's solutions.">
+                <Link href="mailto:fastretrieve.ai@gmail.com?subject=Inquiry about FastRetrieve.AI&body=I&apos;m interested in learning more about FastRetrieve.AI&apos;s solutions.">
                   <Button className="w-full bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/20">Contact Us</Button>
                 </Link>
               </div>
