@@ -47,7 +47,7 @@ export default function LandingPage() {
     const formData = new FormData(e.currentTarget)
     
     try {
-      await fetch("https://formspree.io/f/xgegpnnw", {
+      await fetch("https://formspree.io/f/REMOVED_FORMSPREE_ID", {
         method: "POST",
         body: formData,
         headers: {
