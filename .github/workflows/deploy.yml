@@ -37,6 +37,8 @@ jobs:
         run: npm run build
         env:
           NEXT_LINT_ERROR_EXIT: false
+          NEXT_PUBLIC_FORMSPREE_CHAT_FORM_ID: ${{ secrets.FORMSPREE_CHAT_FORM_ID }}
+          NEXT_PUBLIC_FORMSPREE_NEWSLETTER_FORM_ID: ${{ secrets.FORMSPREE_NEWSLETTER_FORM_ID }}
 
       - name: Add .nojekyll file
         run: touch ./out/.nojekyll
