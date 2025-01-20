@@ -187,7 +187,7 @@ export default function LandingPage() {
                   <CardTitle className="text-primary/90 group-hover:text-primary transition-colors duration-300">Full Transparency</CardTitle>
                 </CardHeader>
                 <CardContent className="text-gray-600 dark:text-gray-300">
-                  Our AI features are clearly marked within the product, so you always know when you're using AI,
+                  Our AI features are clearly marked within the product, so you always know when you&apos;re using AI,
                   maintaining trust and clarity in your workflow.
                 </CardContent>
               </Card>
@@ -292,7 +292,7 @@ export default function LandingPage() {
                   <Input
                     type="email"
                     name="email"
-                    placeholder="What's your work email?"
+                    placeholder="What&apos;s your work email?"
                     className="flex-grow focus-visible:ring-primary border-primary/20"
                     required
                   />
@@ -374,7 +374,7 @@ export default function LandingPage() {
                       <Zap className="h-4 w-4 text-primary" />
                     </div>
                     <div className="bg-gray-800 rounded-2xl rounded-tl-none p-3 max-w-[80%]">
-                      Message received! We'll get back to you ASAP
+                      Message received! We&apos;ll get back to you ASAP
                     </div>
                   </div>
                 </div>
