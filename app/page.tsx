@@ -10,6 +10,7 @@ import { MapPin } from "lucide-react"
 import { TabSection } from "../components/TabSection"
 import { Textarea } from "@/components/ui/textarea"
 import { config } from "@/lib/config"
+import { toast } from "sonner"
 
 const scrollToSection = (elementId: string) => {
   const element = document.getElementById(elementId)
@@ -29,6 +30,7 @@ export default function LandingPage() {
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(false)
+  const [isNewsletterLoading, setIsNewsletterLoading] = useState(false)
 
   useEffect(() => {
     // Check system preference on mount
@@ -48,20 +50,79 @@ export default function LandingPage() {
     const formData = new FormData(e.currentTarget)
     
     try {
-      await fetch(`https://formspree.io/f/${config.formspree.chatEndpoint}`, {
+      const response = await fetch(`https://formspree.io/f/${config.formspree.chatEndpoint}`, {
         method: "POST",
         body: formData,
         headers: {
           Accept: "application/json",
         },
       })
-      setIsSubmitted(true)
-      setTimeout(() => {
-        setIsChatOpen(false)
-        setIsSubmitted(false)
-      }, 3000)
+      
+      const data = await response.json()
+      
+      if (response.ok) {
+        toast.success("Message sent!", {
+          description: "We'll get back to you as soon as possible.",
+        })
+        setIsSubmitted(true)
+        setTimeout(() => {
+          setIsChatOpen(false)
+          setIsSubmitted(false)
+        }, 3000)
+      } else {
+        toast.error("Failed to send message", {
+          description: data.error || "Please try again later.",
+        })
+      }
     } catch (error) {
+      toast.error("Failed to send message", {
+        description: "Please check your connection and try again.",
+      })
       console.error("Error submitting form:", error)
+    }
+  }
+
+  const handleNewsletterSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (isNewsletterLoading) return
+    
+    setIsNewsletterLoading(true)
+    const formData = new FormData(e.currentTarget)
+    
+    try {
+      const response = await fetch(`https://formspree.io/f/${config.formspree.newsletterEndpoint}`, {
+        method: "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json",
+        },
+      })
+      
+      if (response.ok) {
+        try {
+          await response.json()
+        } catch (error) {
+          // Ignore JSON parsing errors if the response was successful
+        }
+        
+        toast.success("Successfully subscribed!", {
+          description: "You'll receive updates from FastRetrieve.AI in your inbox.",
+        })
+        // Reset the form
+        e.currentTarget.reset()
+      } else {
+        const data = await response.json().catch(() => ({}))
+        toast.error("Failed to subscribe", {
+          description: data.error || "Please try again later.",
+        })
+      }
+    } catch (error) {
+      // Only show network error if the request failed to reach the server
+      toast.error("Failed to subscribe", {
+        description: "Please check your connection and try again.",
+      })
+    } finally {
+      setIsNewsletterLoading(false)
     }
   }
 
@@ -288,22 +349,73 @@ export default function LandingPage() {
               </div>
               <div className="flex flex-col space-y-4">
                 <h3 className="text-xl font-bold text-primary">Get the latest in your inbox</h3>
-                <form
-                  action={`https://formspree.io/f/${config.formspree.newsletterEndpoint}`}
-                  method="POST"
-                  className="flex flex-col sm:flex-row gap-2"
-                >
+                <div className="flex flex-col sm:flex-row gap-2">
                   <Input
                     type="email"
                     name="email"
                     placeholder="What&apos;s your work email?"
                     className="flex-grow focus-visible:ring-primary border-primary/20"
                     required
+                    disabled={isNewsletterLoading}
+                    ref={(input) => {
+                      if (input) {
+                        // @ts-ignore - we know this exists
+                        window.newsletterInput = input;
+                      }
+                    }}
                   />
-                  <Button type="submit" className="whitespace-nowrap bg-primary hover:bg-primary/90 text-white shadow-sm shadow-primary/20">
-                    Subscribe
+                  <Button 
+                    onClick={async () => {
+                      // @ts-ignore - we know this exists
+                      const email = window.newsletterInput?.value;
+                      if (!email) {
+                        toast.error("Please enter your email");
+                        return;
+                      }
+                      
+                      if (isNewsletterLoading) return;
+                      setIsNewsletterLoading(true);
+                      
+                      try {
+                        const formData = new FormData();
+                        formData.append('email', email);
+                        formData.append('message', "I'm an interested visitor. I want to get updates from you guys.");
+                        
+                        const response = await fetch(`https://formspree.io/f/${config.formspree.newsletterEndpoint}`, {
+                          method: "POST",
+                          body: formData,
+                          headers: {
+                            Accept: "application/json",
+                          },
+                        });
+                        
+                        if (response.ok) {
+                          toast.success("Successfully subscribed!", {
+                            description: "You'll receive updates from FastRetrieve.AI in your inbox.",
+                          });
+                          // Reset the input
+                          // @ts-ignore - we know this exists
+                          window.newsletterInput.value = '';
+                        } else {
+                          const data = await response.json().catch(() => ({}));
+                          toast.error("Failed to subscribe", {
+                            description: data.error || "Please try again later.",
+                          });
+                        }
+                      } catch (error) {
+                        toast.error("Failed to subscribe", {
+                          description: "Please check your connection and try again.",
+                        });
+                      } finally {
+                        setIsNewsletterLoading(false);
+                      }
+                    }}
+                    className="whitespace-nowrap bg-primary hover:bg-primary/90 text-white shadow-sm shadow-primary/20"
+                    disabled={isNewsletterLoading}
+                  >
+                    {isNewsletterLoading ? "Subscribing..." : "Subscribe"}
                   </Button>
-                </form>
+                </div>
                 <p className="text-xs text-primary/60">
                   By subscribing, you agree to receive updates from FastRetrieve.AI.
                 </p>
