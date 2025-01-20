@@ -225,11 +225,7 @@ export default function LandingPage() {
             <nav className="flex items-center gap-1 sm:gap-2 md:gap-4 whitespace-nowrap">
               <button
                 onClick={() => scrollToSection("features")}
-<<<<<<< HEAD
-                className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-primary transition-colors duration-300 hover:scale-105 shrink-0"
-=======
                 className="px-3 py-2 text-sm font-medium hover:text-primary transition-colors duration-300 hover:scale-105 shrink-0"
->>>>>>> 9e3f479 (feat: improve mobile responsiveness and navigation - Add horizontal scrolling for header navigation, collapsible tab menu for mobile screens, fix chat button and footer overlap, improve z-index layering and mobile menu layout)
               >
                 Features
               </button>
