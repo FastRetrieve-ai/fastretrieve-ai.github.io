@@ -270,7 +270,7 @@ export default function LandingPage() {
               <div className="flex flex-col items-start space-y-4">
                 <div className="flex items-center space-x-4">
                   <div className="bg-primary/10 p-2 rounded-full">
-                    <Zap className="h-8 w-8 text-primary" />
+                    <Zap className="h-8 w-8 text-primary" aria-hidden="true" />
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold text-primary">FastRetrieve.AI</h3>
@@ -326,7 +326,7 @@ export default function LandingPage() {
           <Card className="w-[300px] sm:w-[380px] shadow-lg border-primary/10 bg-gray-950 text-white">
             <CardHeader className="flex flex-row items-center space-x-4 pb-6">
               <div className="bg-primary/10 p-2 rounded-full">
-                <Zap className="h-8 w-8 text-primary" />
+                <Zap className="h-8 w-8 text-primary" aria-hidden="true" />
               </div>
               <div>
                 <CardTitle className="text-lg">FastRetrieve.AI</CardTitle>
